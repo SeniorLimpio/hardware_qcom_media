@@ -74,6 +74,7 @@ libmm-venc-inc      += frameworks/av/include/media/stagefright
 LOCAL_MODULE                    := libOmxVenc
 LOCAL_MODULE_TAGS               := optional
 LOCAL_CFLAGS                    := $(libmm-venc-def)
+LOCAL_CFLAGS                    += -fno-strict-aliasing
 LOCAL_C_INCLUDES                := $(libmm-venc-inc)
 ifeq ($(TARGET_PREBUILT_KERNEL),)
 LOCAL_ADDITIONAL_DEPENDENCIES   := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
@@ -113,6 +114,7 @@ mm-venc-test720p-inc            += hardware/qcom/$(DISPLAY)/libgralloc
 LOCAL_MODULE                    := mm-venc-omx-test720p
 LOCAL_MODULE_TAGS               := optional
 LOCAL_CFLAGS                    := $(libmm-venc-def)
+LOCAL_CFLAGS                    += -fno-strict-aliasing
 LOCAL_C_INCLUDES                := $(mm-venc-test720p-inc)
 ifeq ($(TARGET_PREBUILT_KERNEL),)
 LOCAL_ADDITIONAL_DEPENDENCIES   := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
@@ -140,6 +142,7 @@ endif
 
 LOCAL_MODULE                    := mm-video-encdrv-test
 LOCAL_MODULE_TAGS               := optional
+LOCAL_CFLAGS                    += -fno-strict-aliasing
 LOCAL_C_INCLUDES                := $(venc-test-inc)
 LOCAL_C_INCLUDES                += hardware/qcom/media/mm-core/inc
 ifeq ($(TARGET_PREBUILT_KERNEL),)
