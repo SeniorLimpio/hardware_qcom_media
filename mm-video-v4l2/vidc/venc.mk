@@ -76,13 +76,9 @@ libmm-venc-def += -D_ANDROID_ICS_
 include $(CLEAR_VARS)
 
 ifneq ($(TARGET_QCOM_DISPLAY_VARIANT),)
-DISPLAY := display-$(TARGET_QCOM_DISPLAY_VARIANT)
+PLATFORM := .
 else
-DISPLAY := display/$(TARGET_BOARD_PLATFORM)
-# Fix the header inclusions for platform variants without an explicit path
-ifneq ($(filter msm8610 apq8084 mpq8092,$(TARGET_BOARD_PLATFORM)),)
-  DISPLAY := display/msm8974
-endif
+PLATFORM := msm8974
 endif
 
 libmm-venc-inc      := bionic/libc/include
@@ -94,11 +90,11 @@ endif
 libmm-venc-inc      += $(OMX_VIDEO_PATH)/vidc/common/inc
 libmm-venc-inc      += hardware/qcom/media/mm-core/inc
 libmm-venc-inc      += hardware/qcom/media/libstagefrighthw
-libmm-venc-inc      += hardware/qcom/$(DISPLAY)/libgralloc
+libmm-venc-inc      += $(call project-path-for,qcom-display)/$(PLATFORM)/libgralloc
 libmm-venc-inc      += frameworks/native/include/media/hardware
 libmm-venc-inc      += frameworks/native/include/media/openmax
 libmm-venc-inc      += hardware/qcom/media/libc2dcolorconvert
-libmm-venc-inc      += hardware/qcom/$(DISPLAY)/libcopybit
+libmm-venc-inc      += $(call project-path-for,qcom-display)/$(PLATFORM)/libcopybit
 libmm-venc-inc      += frameworks/av/include/media/stagefright
 libmm-venc-inc      += frameworks/av/include/media/hardware
 libmm-venc-inc      += $(venc-inc)
@@ -137,7 +133,7 @@ mm-venc-test720p-inc            += $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/in
 endif
 mm-venc-test720p-inc            += $(OMX_VIDEO_PATH)/vidc/common/inc
 mm-venc-test720p-inc            += hardware/qcom/media/mm-core/inc
-mm-venc-test720p-inc            += hardware/qcom/$(DISPLAY)/libgralloc
+mm-venc-test720p-inc            += $(call project-path-for,qcom-display)/$(PLATFORM)/libgralloc
 mm-venc-test720p-inc            += $(venc-inc)
 
 LOCAL_MODULE                    := mm-venc-omx-test720p
@@ -164,8 +160,7 @@ include $(BUILD_EXECUTABLE)
 include $(CLEAR_VARS)
 
 venc-test-inc                   += $(LOCAL_PATH)/venc/inc
-venc-test-inc                   += hardware/qcom/$(DISPLAY)/libgralloc
-ifeq ($(TARGET_PREBUILT_KERNEL),)
+venc-test-inc                   += $(call project-path-for,qcom-display)/$(PLATFORM)/libgralloc
 venc-test-inc                   += $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include
 endif
 venc-test-inc                   += $(venc-inc)
